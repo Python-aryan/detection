@@ -5,6 +5,10 @@ from pymongo import MongoClient
 import time
 import cloudinary
 import cloudinary.uploader
+import os
+
+mongo_uri = os.getenv("MONGO_URI")
+rtsp_url = os.getenv("RTSP_URL")
 
 cloudinary.config(
   cloud_name="dsuidrqfg",
@@ -13,15 +17,15 @@ cloudinary.config(
 )
 
 # ✅ Connect to MongoDB (update with your real connection string)
-client = MongoClient("mongodb+srv://pythoncoding0:DOfy1SA2zYVzgTHi@cluster0.ywvtrbj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+client = MongoClient(mongo_uri)
 db = client["cat_detector"]
 collection = db["detections"]
 
 # ✅ Load your trained model
-model = YOLO("datasetcombined/content/runs/detect/cat_detector_merged/weights/best.pt")
+model = YOLO("best.pt")
 
 # ✅ RTSP stream from CP Plus
-rtsp_url = "rtsp://aryan:admin@123@192.168.0.13/cam/realmonitor?channel=3&subtype=0"
+#rtsp_url = "rtsp://aryan:admin@123@192.168.0.13/cam/realmonitor?channel=3&subtype=0"
 
 
 # Open the RTSP stream
